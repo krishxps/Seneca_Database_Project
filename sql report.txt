@@ -1,0 +1,117 @@
+### SQL Queries:
+
+1. Order Information Query:
+   - Purpose: It finds details about orders like the order number, who placed the order, when it was made, and how much it cost.
+   - Query:
+
+
+     SELECT o.OrderID, c.Name AS CustomerName, o.OrderDate, o.TotalAmount
+     FROM Orders o
+     JOIN Customers c ON o.CustomerID = c.CustomerID;
+
+   - Result: It gives a list with all this information.information.
+
+
+2. Product Attributes Query:
+   - Purpose: It tells us about products and their characteristics, like size, color, and category.
+   - Query:
+
+
+     SELECT p.Name AS ProductName, s.SizeName, co.ColorName, cat.CategoryName
+     FROM Products p
+     JOIN ProductAttributes pa ON p.ProductID = pa.ProductID
+     JOIN Size_ s ON pa.SizeID = s.SizeID
+     JOIN Color co ON pa.ColorID = co.ColorID
+     JOIN Category_ cat ON pa.CategoryID = cat.CategoryID;
+
+
+  - Result: It shows a list of products with these details.
+
+
+3. Employee Order Summary Query:
+   - Purpose: It shows us the names and roles of employees along with the orders they've handled.
+   - Query:
+
+
+     SELECT e.Name AS EmployeeName, e.Position, o.OrderID, o.OrderDate, o.TotalAmount
+     FROM Employees e
+     JOIN Orders o ON e.EmployeeID = o.EmployeeID;
+
+
+   - Result: We see a summary of who did what orders.
+
+
+4. Customer Total Sales Query:
+   - Purpose: It adds up all the money each customer has spent.
+   - Query:
+
+
+     SELECT c.CustomerID, c.Name AS CustomerName, SUM(o.TotalAmount) AS TotalSales
+     FROM Customers c
+     JOIN Orders o ON c.CustomerID = o.CustomerID
+     GROUP BY c.CustomerID, c.Name;
+
+
+   - Result: We get a list showing how much each customer has spent in total.
+
+
+5. Average Price per Category Query:
+   Purpose: It calculates how much, on average, products in each category cost.
+   - Query:
+
+
+     SELECT cat.CategoryName, AVG(p.Price) AS AvgPrice
+     FROM Products p
+     JOIN ProductAttributes pa ON p.ProductID = pa.ProductID
+     JOIN Category_ cat ON pa.CategoryID = cat.CategoryID
+     GROUP BY cat.CategoryName;
+
+
+   - Result: It tells us the average price of items in different categories.
+
+6. Orders by Example Domain Query:
+   Purpose: It finds orders made by customers with email addresses that contain "example.com".
+   - Query:
+
+
+     SELECT o.OrderID, o.OrderDate, o.TotalAmount
+     FROM Orders o
+     WHERE o.CustomerID IN (SELECT CustomerID FROM Customers WHERE Email LIKE '%example.com');
+
+
+   Result: We see a list of orders from these customers.
+
+    Transaction:
+
+- Insert New Customer:
+  - Purpose: It adds a new person to the list of customers.
+  - Query:
+
+
+    INSERT INTO Customers (CustomerID, Name, Email, Phone, Address)
+    VALUES (2, 'Kemal Batu', 'noob@kemal.com', '1234567890', '11 seneca way');
+
+
+  - Significance: It shows how to put someone new into the system.
+
+- Update Product Price:
+  - Purpose: It changes the price of one of the products.
+  - Query:
+
+
+    UPDATE Products
+    SET Price = 24.99
+    WHERE ProductID = 1;
+
+
+  - Significance: This action demonstrates how to adjust the cost of an item.
+
+- Delete Employee:
+  - Purpose: It removes a worker from the employee list.
+  - Query:
+
+
+    DELETE FROM Employees WHERE EmployeeID = 1;
+
+
+  - Significance: It shows how to take someone off the list of employees.
